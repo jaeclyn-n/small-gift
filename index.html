@@ -640,25 +640,32 @@ createSakura,
 const bgMusic = document.getElementById('bg-music');
 let typingStarted = false;
 
-// Start typing when music plays
-bgMusic.addEventListener('play', () => {
+function startTyping(){
     if (!typingStarted) {
         typingStarted = true;
         i = 0;
         typingEl.innerHTML = '';
         type();
     }
-});
+}
 
-// Try to auto-play on first user interaction
+// Start typing immediately on page load
+window.addEventListener('load', startTyping);
+
+// Keep the text typing synced with audio when it starts playing
+if (bgMusic) {
+    bgMusic.addEventListener('play', startTyping);
+}
+
+// Try to auto-play and unmute on first user interaction
 function attemptAutoPlay(){
-    if(bgMusic && bgMusic.paused){
+    if (bgMusic) {
+        bgMusic.muted = false;
         const p = bgMusic.play();
-        if(p && p.then){
+        if (p && p.then) {
             p.then(() => {
                 console.log('Audio playback started');
-                bgMusic.muted = false;
-            }).catch((err)=>{
+            }).catch((err) => {
                 console.error('Audio play failed', err);
             });
         }
@@ -667,13 +674,6 @@ function attemptAutoPlay(){
 }
 
 document.addEventListener('click', attemptAutoPlay, {once:true});
-
-// Unmute audio after autoplay begins
-window.addEventListener('load', () => {
-    if(bgMusic){
-        bgMusic.muted = false;
-    }
-});
 
 // media error logging for diagnostics
 if(bgMusic){
