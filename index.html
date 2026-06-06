@@ -649,8 +649,8 @@ function startTyping(){
     }
 }
 
-// Start typing immediately on page load
-window.addEventListener('load', startTyping);
+// Start typing immediately when the script runs
+startTyping();
 
 // Keep the text typing synced with audio when it starts playing
 if (bgMusic) {
