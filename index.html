@@ -462,11 +462,12 @@ body{
 </div>
 
 <!-- Background music and control -->
-<audio id="bg-music" loop preload="auto" autoplay muted>
+<audio id="bg-music" loop preload="auto" playsinline>
     <source src="music/hijo-de-la-luna.mp3.mp3" type="audio/mp3">
     Your browser does not support the audio element.
 </audio>
 
+<button id="music-toggle" aria-pressed="false">Play music</button>
 
 <div class="container">
 
@@ -649,31 +650,66 @@ function startTyping(){
     }
 }
 
-// Start typing immediately when the script runs
-startTyping();
+function startScene() {
+    if (!typingStarted) {
+        startTyping();
+    }
+
+    if (bgMusic && bgMusic.paused) {
+        bgMusic.play().then(() => {
+            updateMusicButton();
+        }).catch((err) => {
+            console.error('Music play failed', err);
+        });
+    }
+}
 
 // Keep the text typing synced with audio when it starts playing
 if (bgMusic) {
     bgMusic.addEventListener('play', startTyping);
 }
 
-// Try to auto-play and unmute on first user interaction
-function attemptAutoPlay(){
-    if (bgMusic) {
-        bgMusic.muted = false;
-        const p = bgMusic.play();
-        if (p && p.then) {
-            p.then(() => {
-                console.log('Audio playback started');
-            }).catch((err) => {
-                console.error('Audio play failed', err);
-            });
-        }
+const musicToggle = document.getElementById('music-toggle');
+
+function updateMusicButton() {
+    if (!musicToggle || !bgMusic) return;
+    const isPlaying = !bgMusic.paused;
+
+    if (!isPlaying) {
+        musicToggle.setAttribute('aria-pressed', 'false');
+        musicToggle.textContent = 'Play music';
+    } else {
+        musicToggle.setAttribute('aria-pressed', 'true');
+        musicToggle.textContent = 'Pause music';
     }
-    document.removeEventListener('click', attemptAutoPlay);
 }
 
-document.addEventListener('click', attemptAutoPlay, {once:true});
+function toggleMusic(event) {
+    if (event) event.stopPropagation();
+    if (!bgMusic) return;
+
+    if (bgMusic.paused) {
+        bgMusic.play().then(() => {
+            updateMusicButton();
+        }).catch((err) => {
+            console.error('Music play failed', err);
+        });
+    } else {
+        bgMusic.pause();
+        updateMusicButton();
+    }
+}
+
+if (musicToggle) {
+    musicToggle.addEventListener('click', toggleMusic);
+}
+
+function handleFirstUserClick() {
+    startScene();
+    document.removeEventListener('click', handleFirstUserClick);
+}
+
+document.addEventListener('click', handleFirstUserClick, {once:true});
 
 // media error logging for diagnostics
 if(bgMusic){
@@ -681,6 +717,7 @@ if(bgMusic){
         console.error('Media element error', bgMusic.error, e);
         alert('Media playback error — see console for details.');
     });
+    updateMusicButton();
 }
 
 </script>
