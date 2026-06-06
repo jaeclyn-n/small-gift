@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Flower Letter</title>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    min-height:100vh;
+    overflow:hidden;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    background:
+    linear-gradient(
+        135deg,
+        #ff6da5b2,
+        #ff8bb7de,
+        #ffa3c5
+    );
+
+    font-family:
+    "Georgia",
+    serif;
+}
+
+/* Top doodle banner */
+
+.top-doodle{
+
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100px;
+    z-index:1;
+    pointer-events:none;
+    overflow:hidden;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:18px;
+    background:linear-gradient(180deg, rgba(255,255,255,0.9), rgba(255,255,255,0));
+}
+
+.top-doodle .doodle{
+    font-size:32px;
+    opacity:.9;
+    animation: doodleFloat 4s ease-in-out infinite;
+}
+
+.top-doodle .doodle:nth-child(2){
+    animation-delay: 0.7s;
+}
+
+.top-doodle .doodle:nth-child(3){
+    animation-delay: 1.4s;
+}
+
+@keyframes doodleFloat{
+    0%,100%{
+        transform: translateY(0) rotate(0deg);
+    }
+    50%{
+        transform: translateY(10px) rotate(10deg);
+    }
+}
+
+/* Container */
+
+.container{
+
+    position:relative;
+
+    width:700px;
+    height:700px;
+}
+
+/* Flowers */
+
+.flower{
+
+    position:absolute;
+
+    z-index:2;
+
+    transform-origin:center center;
+    transform: rotate(var(--flower-rotate, 0deg));
+
+    animation:
+    bloom 1.2s ease,
+    flowerFloat 6s ease-in-out infinite;
+}
+
+.flower1{
+    width:260px;
+    top:20px;
+    left:-100px;
+    --flower-rotate: -30deg;
+    animation-delay: 0s, 0s;
+}
+
+.flower2{
+    width:260px;
+    top:20px;
+    right:-150px;
+    --flower-rotate: 30deg;
+    animation-delay: 0s, 0s;
+}
+
+.flower3{
+    width:260px;
+    bottom:120px;
+    left:-100px;
+    --flower-rotate: -30deg;
+    animation-delay: 0s, 0s;
+}
+
+.flower4{
+    width:280px;
+    bottom:110px;
+    right:-120px;
+    --flower-rotate: 20deg;
+    animation-delay: 0s, 0s;
+}
+
+/* Envelope */
+
+.envelope{
+
+    position:absolute;
+
+    bottom:0;
+    left:50%;
+
+    transform:
+    translateX(-50%);
+
+    width:520px;
+    height:280px;
+
+    z-index:2;
+}
+
+.envelope-base{
+
+    position:absolute;
+
+    width:100%;
+    height:100%;
+
+    background:
+    linear-gradient(
+        180deg,
+        #ff9ec4,
+        #ff6fa0
+    );
+
+    border-radius:15px;
+    box-shadow:
+    inset 0 20px 40px
+    rgba(0,0,0,.12),
+    0 20px 50px
+    rgba(255,111,160,.3);
+}
+
+.envelope-top{
+
+    position:absolute;
+
+    width:100%;
+    height:60%;
+    top:0;
+
+    background:
+    linear-gradient(
+        180deg,
+        #ffc1d9,
+        #ff9ec4
+    );
+
+    clip-path:
+    polygon(
+        0 0,
+        50% 100%,
+        100% 0
+    );
+
+    transform-origin: top center;
+    transform:
+    rotateX(180deg)
+    translateY(-20%);
+
+    box-shadow:
+    0 -10px 25px
+    rgba(0,0,0,.25),
+    inset 0 5px 15px
+    rgba(255,255,255,.3);
+
+    z-index:1;
+}
+
+/* Letter */
+
+.letter{
+
+    position:absolute;
+
+    left:50%;
+    transform:
+    translateX(-50%);
+
+    width:380px;
+    height:520px;
+
+    background:white;
+
+    border-radius:20px;
+
+    padding:35px;
+
+    top:80px;
+    z-index:5;
+
+    box-shadow:
+    0 15px 35px
+    rgb(240, 152, 206);
+
+    opacity:0;
+
+    animation:
+    letterFadeIn 2s ease-in forwards,
+    letterFloat 5s ease-in-out infinite 2s;
+}
+
+#name{
+
+    text-align:center;
+
+    color:#e56b93;
+
+    margin-bottom:20px;
+
+    font-size:24px;
+    font-weight:600;
+}
+
+#typing{
+
+    line-height:1.0;
+
+    color:#555;
+
+    text-align:center;
+
+    white-space:pre-wrap;
+    overflow-y:auto;
+    max-height:320px;
+    scroll-behavior:smooth;
+}
+
+/* Sakura */
+
+.sakura{
+
+    position:fixed;
+    top:-40px;
+    z-index:999;
+
+    pointer-events:none;
+
+    animation:
+    fall linear forwards;
+}
+
+/* Animations */
+
+@keyframes bloom{
+
+    from{
+        transform:
+        rotate(var(--flower-rotate,0deg))
+        scale(0);
+        opacity:0;
+    }
+
+    to{
+        transform:
+        rotate(var(--flower-rotate,0deg))
+        scale(1);
+        opacity:1;
+    }
+}
+
+@keyframes flowerFloat{
+
+    0%,100%{
+        transform:
+        rotate(var(--flower-rotate,0deg))
+        translateY(0);
+    }
+
+    50%{
+        transform:
+        rotate(var(--flower-rotate,0deg))
+        translateY(-14px);
+    }
+}
+
+@keyframes letterFadeIn{
+
+    from{
+        opacity:0;
+        transform:translateX(-50%) translateY(60px);
+    }
+
+    to{
+        opacity:1;
+        transform:translateX(-50%) translateY(0);
+    }
+}
+
+@keyframes letterFloat{
+
+    0%,100%{
+        transform:
+        translateX(-50%)
+        translateY(0);
+    }
+
+    50%{
+        transform:
+        translateX(-50%)
+        translateY(-10px);
+    }
+}
+
+@keyframes twinkle{
+
+    50%{
+        opacity:.6;
+    }
+}
+
+@keyframes fall{
+
+    from{
+
+        transform:
+        translateY(-50px)
+        rotate(0deg);
+
+        opacity:1;
+    }
+
+    to{
+
+        transform:
+        translateY(110vh)
+        rotate(360deg);
+
+        opacity:0;
+    }
+}
+
+/* Mobile */
+
+@media(max-width:768px){
+
+.container{
+
+    width:100%;
+    height:100vh;
+}
+
+.letter{
+
+    width:85%;
+    height:auto;
+
+    min-height:420px;
+}
+
+.envelope{
+
+    width:90%;
+    height:220px;
+}
+
+.flower1,
+.flower2,
+.flower3,
+.flower4{
+
+    width:170px;
+}
+
+.flower1{
+    top:10px;
+    left:10px;
+}
+
+.flower2{
+    top:10px;
+    right:10px;
+}
+
+.flower3{
+    bottom:160px;
+    left:10px;
+}
+
+.flower4{
+    bottom:160px;
+    right:10px;
+}
+
+}
+
+/* Music control */
+.music-toggle,
+#music-toggle{
+    position:fixed;
+    right:18px;
+    top:18px;
+    z-index:1000;
+    background:rgba(255,255,255,0.9);
+    border:0;
+    padding:8px 12px;
+    border-radius:20px;
+    box-shadow:0 4px 12px rgba(0,0,0,0.12);
+    cursor:pointer;
+    font-size:14px;
+}
+
+#music-toggle[aria-pressed="true"]{
+    background:linear-gradient(90deg,#ffd9e8,#ffb8cf);
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="top-doodle">
+    <span class="doodle">💕</span>
+    <span class="doodle">🧸</span>
+    <span class="doodle">💖</span>
+    <span class="doodle">🧸</span>
+    <span class="doodle">💕</span>
+</div>
+
+<!-- Background music and control -->
+<audio id="bg-music" loop preload="auto" autoplay muted>
+    <source src="music/hijo-de-la-luna.mp3.mp3" type="audio/mp3">
+    Your browser does not support the audio element.
+</audio>
+
+
+<div class="container">
+
+    <!-- Flowers -->
+
+    <img src="assets/flower1.png"
+    class="flower flower1">
+
+    <img src="assets/flower2.png"
+    class="flower flower2">
+
+    <img src="assets/flower3.png"
+    class="flower flower3">
+
+    <img src="assets/flower4.png"
+    class="flower flower4">
+
+    <!-- Letter -->
+
+    <div class="letter">
+
+        <h1 id="name"></h1>
+        <p id="typing"></p>
+
+    </div>
+
+    <!-- Envelope -->
+
+    <div class="envelope">
+
+        <div class="envelope-base"></div>
+
+        <div class="envelope-top"></div>
+
+    </div>
+
+</div>
+
+<script>
+
+/* Nama */
+
+const receiver =
+"Tifany";
+
+/* Isi Surat */
+
+const text =
+`Selamat ulang tahun 🎂
+
+Semoga panjang umur,
+sehat selalu,
+dan semua impianmu
+satu per satu terwujud.
+
+Terima kasih karena
+selalu menjadi pribadi
+yang baik dan membawa
+warna dalam banyak cerita.
+
+Selamat bertambah,
+selamat atas hari-hari
+yang dilalui.
+Bulan dimana kamu dilahirkan,
+adalah titik awal kamu 
+melewati segala hal.
+Maka, bertumbuhlah dengan
+sangat cantik.
+
+Sekali lagi, selamat ulang tahun.
+🌸💖🌷`;
+
+/* Nama */
+
+const nameEl = document.getElementById("name");
+const typingEl = document.getElementById("typing");
+
+nameEl.textContent = "💐" + "Happy Birthday" + "🎂" + receiver;
+
+/* Typing Effect */
+
+let i = 0;
+
+function type(){
+
+    if(i < text.length){
+
+        typingEl.innerHTML +=
+        text.charAt(i);
+
+        typingEl.scrollTo({
+            top: typingEl.scrollHeight,
+            behavior: "smooth"
+        });
+
+        i++;
+
+        setTimeout(type,120);
+    }
+}
+
+/* Random flower rotation */
+
+function randomBetween(min, max) {
+    return Math.random() * (max - min) + min;
+}
+
+function setFlowerRotation() {
+    document.querySelectorAll('.flower').forEach((flower) => {
+        // Respect any rotation set via CSS rules or inline styles.
+        const computed = getComputedStyle(flower).getPropertyValue('--flower-rotate').trim();
+        if (computed && computed !== '0' && computed !== '0deg') {
+            return; // leave existing class-defined rotation alone
+        }
+
+        const angle = randomBetween(-24, 24);
+        flower.style.setProperty('--flower-rotate', `${angle}deg`);
+    });
+}
+
+// Only apply random rotation to flowers that don't already have a rotation
+setFlowerRotation();
+
+/* Sakura */
+
+function createSakura(){
+
+    const sakura =
+    document.createElement("div");
+
+    sakura.classList.add(
+    "sakura"
+    );
+
+    sakura.innerHTML="🌸";
+
+    sakura.style.left =
+    Math.random()*100 +
+    "vw";
+
+    sakura.style.top =
+    "-30px";
+
+    sakura.style.fontSize =
+    Math.random()*20+12+
+    "px";
+
+    sakura.style.animationDuration =
+    Math.random()*8+8+
+    "s";
+
+    sakura.style.opacity =
+    Math.random()*0.5+0.5;
+
+    document.body
+    .appendChild(sakura);
+
+    setTimeout(()=>{
+
+        sakura.remove();
+
+    },10000);
+}
+
+setInterval(
+createSakura,
+400
+);
+
+/* Music auto-play on user interaction */
+const bgMusic = document.getElementById('bg-music');
+let typingStarted = false;
+
+// Start typing when music plays
+bgMusic.addEventListener('play', () => {
+    if (!typingStarted) {
+        typingStarted = true;
+        i = 0;
+        typingEl.innerHTML = '';
+        type();
+    }
+});
+
+// Try to auto-play on first user interaction
+function attemptAutoPlay(){
+    if(bgMusic && bgMusic.paused){
+        const p = bgMusic.play();
+        if(p && p.then){
+            p.then(() => {
+                console.log('Audio playback started');
+                bgMusic.muted = false;
+            }).catch((err)=>{
+                console.error('Audio play failed', err);
+            });
+        }
+    }
+    document.removeEventListener('click', attemptAutoPlay);
+}
+
+document.addEventListener('click', attemptAutoPlay, {once:true});
+
+// Unmute audio after autoplay begins
+window.addEventListener('load', () => {
+    if(bgMusic){
+        bgMusic.muted = false;
+    }
+});
+
+// media error logging for diagnostics
+if(bgMusic){
+    bgMusic.addEventListener('error', (e)=>{
+        console.error('Media element error', bgMusic.error, e);
+        alert('Media playback error — see console for details.');
+    });
+}
+
+</script>
+
+</body>
+</html>
