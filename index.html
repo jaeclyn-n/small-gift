@@ -4,7 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Flower Letter</title>
+<title>Happy Birthday Tifany 💖</title>
+
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
 
 <style>
 
@@ -16,7 +18,8 @@
 
 body{
     min-height:100vh;
-    overflow:hidden;
+    overflow-x:hidden;
+    overflow-y:auto;
 
     display:flex;
     justify-content:center;
@@ -25,56 +28,182 @@ body{
     background:
     linear-gradient(
         135deg,
-        #ff6da5b2,
-        #ff8bb7de,
-        #ffa3c5
-    );
+        #c8a2ff,
+        #ff9ecf,
+        #a9d6ff
+        );
 
-    font-family:
-    "Georgia",
-    serif;
+    font-family:"Georgia",serif;
 }
 
-/* Top doodle banner */
+/* =====================
+   INTRO SCREEN
+===================== */
+
+#intro-screen{
+
+    position:fixed;
+    inset:0;
+
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+
+    gap:25px;
+
+    z-index:99999;
+
+    background:
+    linear-gradient(
+        135deg,
+        #ff6da5,
+        #ffa3c5
+    );
+}
+
+#click-text{
+
+    color:white;
+
+    font-size:24px;
+
+    animation:
+    pulse 1.5s infinite;
+}
+
+#popup-envelope{
+
+    width:300px;
+    height:200px;
+
+    position:relative;
+
+    cursor:pointer;
+
+    transition:.4s;
+}
+
+#popup-envelope:hover{
+
+    transform:
+    scale(1.05)
+    translateY(-10px);
+}
+
+.popup-base{
+
+    position:absolute;
+
+    width:100%;
+    height:100%;
+
+    background:#b892ff;
+    
+    border-radius:15px;
+}
+
+.popup-flap{
+
+    position:absolute;
+
+    width:100%;
+    height:50%;
+
+    background:#d7c0ff;
+
+    clip-path:
+    polygon(
+        0 0,
+        50% 100%,
+        100% 0
+    );
+
+    transform-origin:top;
+
+    transition:1s;
+}
+
+.popup-heart{
+
+    position:absolute;
+
+    width:100%;
+
+    text-align:center;
+
+    top:70px;
+
+    font-size:50px;
+}
+
+#popup-envelope.open .popup-flap{
+
+    transform:
+    rotateX(180deg);
+}
+
+/* =====================
+   MAIN CONTENT
+===================== */
+
+#main-content{
+
+    display:none;
+}
+
+/* Doodles */
 
 .top-doodle{
 
     position:fixed;
-    top:0;
+
+    top:10px;
     left:0;
+
     width:100%;
-    height:100px;
-    z-index:1;
-    pointer-events:none;
-    overflow:hidden;
+    height:90px;
+
     display:flex;
-    align-items:center;
     justify-content:center;
-    gap:18px;
-    background:linear-gradient(180deg, rgba(255,255,255,0.9), rgba(255,255,255,0));
+    align-items:center;
+
+    gap:20px;
+
+    z-index:100;
+
+    pointer-events:none;
 }
 
-.top-doodle .doodle{
-    font-size:32px;
-    opacity:.9;
-    animation: doodleFloat 4s ease-in-out infinite;
+.doodle{
+
+    font-size:50px;
+
+    opacity:0;
+
+    animation:
+    doodleFade .8s forwards,
+    doodleFloat 4s infinite ease-in-out;
 }
 
-.top-doodle .doodle:nth-child(2){
-    animation-delay: 0.7s;
+.doodle:nth-child(1){
+    animation-delay:.3s;
 }
 
-.top-doodle .doodle:nth-child(3){
-    animation-delay: 1.4s;
+.doodle:nth-child(2){
+    animation-delay:.6s;
 }
 
-@keyframes doodleFloat{
-    0%,100%{
-        transform: translateY(0) rotate(0deg);
-    }
-    50%{
-        transform: translateY(10px) rotate(10deg);
-    }
+.doodle:nth-child(3){
+    animation-delay:.9s;
+}
+
+.doodle:nth-child(4){
+    animation-delay:1.2s;
+}
+
+.doodle:nth-child(5){
+    animation-delay:1.5s;
 }
 
 /* Container */
@@ -83,59 +212,172 @@ body{
 
     position:relative;
 
-    width:700px;
-    height:700px;
+    width:850px;
+    height:850px;
 }
 
 /* Flowers */
 
 .flower{
-
     position:absolute;
-
     z-index:2;
+    opacity:0;
 
-    transform-origin:center center;
-    transform: rotate(var(--flower-rotate, 0deg));
-
-    animation:
-    bloom 1.2s ease,
-    flowerFloat 6s ease-in-out infinite;
+    animation-fill-mode:forwards;
 }
 
 .flower1{
+
     width:260px;
     top:20px;
-    left:-100px;
-    --flower-rotate: -30deg;
-    animation-delay: 0s, 0s;
+    left:-150px;
+
+    animation:
+    flowerLeft 1.5s forwards;
 }
 
 .flower2{
+
     width:260px;
     top:20px;
-    right:-150px;
-    --flower-rotate: 30deg;
-    animation-delay: 0s, 0s;
+    right:-190px;
+
+    animation:
+    flowerRight 1.5s forwards;
 }
 
 .flower3{
+
     width:260px;
     bottom:120px;
-    left:-100px;
-    --flower-rotate: -30deg;
-    animation-delay: 0s, 0s;
+    left:-150px;
+
+    animation:
+    flowerLeft 1.8s forwards;
 }
 
 .flower4{
+
     width:280px;
     bottom:110px;
-    right:-120px;
-    --flower-rotate: 20deg;
-    animation-delay: 0s, 0s;
+    right:-190px;
+
+    animation:
+    flowerRight 1.8s forwards;
 }
 
-/* Envelope */
+/* Letter */
+
+.letter{
+
+    position:absolute;
+
+    left:50%;
+
+    width:500px;
+    height:560px;
+
+    top:90px;
+
+    background:
+    linear-gradient(
+        180deg,
+        #fffaff,
+        #fff0f7
+    );
+
+    border-radius:25px;
+
+    padding:40px;
+
+    z-index:5;
+
+    overflow:hidden;
+
+    display:flex;
+    flex-direction:column;
+
+    opacity:0;
+
+    border:2px solid #d7c0ff;
+
+    box-shadow:
+    0 0 40px rgba(200,162,255,.8),
+    0 0 25px rgba(255,158,207,.5),
+    0 0 15px rgba(169,214,255,.4),
+    0 15px 35px rgba(0,0,0,.12);
+
+    transform:
+    translateX(-50%)
+    scale(.2);
+}
+
+#name{
+    animation: glow 2s infinite;
+    text-align:center;
+
+   color:#9c6ade;
+
+    margin-bottom:35px;
+
+    font-size:36px;
+
+    line-height:1.6;
+}
+
+@keyframes glow{
+    50%{
+        text-shadow: 0 0 15px #ff8bb7;
+    }
+}
+
+#typing{
+
+    text-align:center;
+
+    line-height:2;
+
+    font-size:18px;
+
+    color:#5e5e5e;
+
+    white-space:pre-wrap;
+    
+    flex:1;
+
+    max-height:300px;
+
+    overflow-y:auto;
+
+    padding-right:8px;
+    
+}
+
+#typing::-webkit-scrollbar{
+
+    width:8px;
+}
+
+#typing::-webkit-scrollbar-track{
+
+    background:#f7e8ff;
+
+    border-radius:10px;
+}
+
+#typing::-webkit-scrollbar-thumb{
+
+    background:
+    linear-gradient(
+        #c8a2ff,
+        #ff9ecf,
+        #a9d6ff
+    );
+
+    border-radius:10px;
+}
+
+/* Envelope bawah */
 
 .envelope{
 
@@ -149,8 +391,6 @@ body{
 
     width:520px;
     height:280px;
-
-    z-index:2;
 }
 
 .envelope-base{
@@ -163,16 +403,11 @@ body{
     background:
     linear-gradient(
         180deg,
-        #ff9ec4,
-        #ff6fa0
-    );
+        #c8a2ff,
+        #9c6ade
+        );
 
     border-radius:15px;
-    box-shadow:
-    inset 0 20px 40px
-    rgba(0,0,0,.12),
-    0 20px 50px
-    rgba(255,111,160,.3);
 }
 
 .envelope-top{
@@ -181,14 +416,14 @@ body{
 
     width:100%;
     height:60%;
-    top:0;
-
+    
     background:
     linear-gradient(
         180deg,
-        #ffc1d9,
-        #ff9ec4
-    );
+        #e7dcff,
+        #c8a2ff
+        
+        );    
 
     clip-path:
     polygon(
@@ -197,77 +432,30 @@ body{
         100% 0
     );
 
-    transform-origin: top center;
     transform:
-    rotateX(180deg)
-    translateY(-20%);
-
-    box-shadow:
-    0 -10px 25px
-    rgba(0,0,0,.25),
-    inset 0 5px 15px
-    rgba(255,255,255,.3);
+    rotateX(180deg);
 
     z-index:1;
 }
 
-/* Letter */
+/* Music Button */
 
-.letter{
+#music-toggle{
 
-    position:absolute;
+    position:fixed;
 
-    left:50%;
-    transform:
-    translateX(-50%);
+    right:20px;
+    top:20px;
 
-    width:380px;
-    height:520px;
+    z-index:999;
 
-    background:white;
+    border:none;
+
+    padding:10px 14px;
 
     border-radius:20px;
 
-    padding:35px;
-
-    top:80px;
-    z-index:5;
-
-    box-shadow:
-    0 15px 35px
-    rgb(240, 152, 206);
-
-    opacity:0;
-
-    animation:
-    letterFadeIn 2s ease-in forwards,
-    letterFloat 5s ease-in-out infinite 2s;
-}
-
-#name{
-
-    text-align:center;
-
-    color:#e56b93;
-
-    margin-bottom:20px;
-
-    font-size:24px;
-    font-weight:600;
-}
-
-#typing{
-
-    line-height:1.0;
-
-    color:#555;
-
-    text-align:center;
-
-    white-space:pre-wrap;
-    overflow-y:auto;
-    max-height:320px;
-    scroll-behavior:smooth;
+    cursor:pointer;
 }
 
 /* Sakura */
@@ -275,85 +463,184 @@ body{
 .sakura{
 
     position:fixed;
-    top:-40px;
-    z-index:999;
+
+    top:-30px;
+
+    z-index:9999;
 
     pointer-events:none;
 
     animation:
-    fall linear forwards;
+    sakuraFall linear forwards;
 }
 
-/* Animations */
+/* =====================
+   ANIMATIONS
+===================== */
 
-@keyframes bloom{
-
-    from{
-        transform:
-        rotate(var(--flower-rotate,0deg))
-        scale(0);
-        opacity:0;
-    }
-
-    to{
-        transform:
-        rotate(var(--flower-rotate,0deg))
-        scale(1);
-        opacity:1;
-    }
-}
-
-@keyframes flowerFloat{
+@keyframes floatLeft{
 
     0%,100%{
+
         transform:
-        rotate(var(--flower-rotate,0deg))
-        translateY(0);
+        rotate(-50deg)
+        translateY(0px);
+
     }
 
-    50%{
+    25%{
+
         transform:
-        rotate(var(--flower-rotate,0deg))
-        translateY(-14px);
-    }
-}
-
-@keyframes letterFadeIn{
-
-    from{
-        opacity:0;
-        transform:translateX(-50%) translateY(60px);
-    }
-
-    to{
-        opacity:1;
-        transform:translateX(-50%) translateY(0);
-    }
-}
-
-@keyframes letterFloat{
-
-    0%,100%{
-        transform:
-        translateX(-50%)
-        translateY(0);
-    }
-
-    50%{
-        transform:
-        translateX(-50%)
+        rotate(-47deg)
         translateY(-10px);
-    }
-}
 
-@keyframes twinkle{
+    }
 
     50%{
-        opacity:.6;
+
+        transform:
+        rotate(-53deg)
+        translateY(-18px);
+
+    }
+
+    75%{
+
+        transform:
+        rotate(-48deg)
+        translateY(-8px);
+
     }
 }
 
-@keyframes fall{
+@keyframes floatRight{
+
+    0%,100%{
+
+        transform:
+        rotate(30deg)
+        translateY(0px);
+
+    }
+
+    25%{
+
+        transform:
+        rotate(33deg)
+        translateY(-10px);
+
+    }
+
+    50%{
+
+        transform:
+        rotate(27deg)
+        translateY(-18px);
+
+    }
+
+    75%{
+
+        transform:
+        rotate(32deg)
+        translateY(-8px);
+
+    }
+}
+
+@keyframes pulse{
+
+    50%{
+        transform:scale(1.08);
+    }
+}
+
+@keyframes doodleFade{
+
+    from{
+
+        opacity:0;
+        transform:
+        translateY(-20px);
+    }
+
+    to{
+
+        opacity:1;
+        transform:
+        translateY(0);
+    }
+}
+
+@keyframes doodleFloat{
+
+    50%{
+
+        transform:
+        translateY(10px);
+    }
+}
+
+@keyframes flowerLeft{
+
+    from{
+
+        opacity:0;
+
+        transform:
+        translateX(-250px);
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:
+        translateX(0);
+    }
+}
+
+@keyframes flowerRight{
+
+    from{
+
+        opacity:0;
+
+        transform:
+        translateX(250px);
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:
+        translateX(0);
+    }
+}
+
+@keyframes letterAppear{
+
+    from{
+
+        opacity:0;
+
+        transform:
+        translateX(-50%)
+        scale(.2);
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:
+        translateX(-50%)
+        scale(1);
+    }
+}
+
+@keyframes sakuraFall{
 
     from{
 
@@ -368,15 +655,174 @@ body{
 
         transform:
         translateY(110vh)
-        rotate(360deg);
+        rotate(720deg);
 
         opacity:0;
     }
 }
 
+/* Flower Popup */
+
+#flower-popup{
+
+    position:fixed;
+
+    inset:0;
+
+    display:none;
+
+    justify-content:center;
+
+    align-items:center;
+
+    background:
+    rgba(0,0,0,.45);
+
+    z-index:99999;
+}
+
+.popup-card{
+
+    width:350px;
+
+    background:white;
+
+    border-radius:25px;
+
+    padding:30px;
+
+    text-align:center;
+
+    position:relative;
+
+    animation:
+    popupAppear .5s ease;
+
+    box-shadow:
+    0 10px 40px rgba(0,0,0,.2);
+}
+
+.popup-flower{
+
+    font-size:50px;
+
+    margin-bottom:15px;
+}
+
+.popup-card h2{
+
+    color:#ff6397;
+
+    margin-bottom:15px;
+}
+
+.popup-card p{
+
+    line-height:1.7;
+
+    color:#8a8585;
+}
+
+#close-popup{
+
+    position:absolute;
+
+    right:15px;
+    top:10px;
+
+    cursor:pointer;
+
+    font-size:20px;
+}
+
+@keyframes popupAppear{
+
+    from{
+
+        opacity:0;
+
+        transform:
+        scale(.7);
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:
+        scale(1);
+    }
+}
+
 /* Mobile */
 
+#gift-btn{
+
+    display:none;
+
+    opacity:0;
+
+    transform:translateY(20px);
+
+    margin:20px auto 0;
+
+    padding:12px 20px;
+
+    border:none;
+
+    border-radius:20px;
+
+    background:#d889a7;
+
+    color:white;
+
+    font-size:16px;
+
+    cursor:pointer;
+
+    transition:.3s;
+}
+
+#gift-btn:hover{
+
+    transform:
+    translateY(20px)
+    scale(1.05);
+}
+
+.show-btn{
+
+    display:block !important;
+
+    animation:
+    showButton .8s forwards;
+}
+
+@keyframes showButton{
+
+    from{
+
+        opacity:0;
+
+        transform:
+        translateY(20px);
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:
+        translateY(0);
+    }
+}
+
 @media(max-width:768px){
+
+#gift-btn:hover{
+
+    transform:scale(1.05);
+}
 
 .container{
 
@@ -386,134 +832,168 @@ body{
 
 .letter{
 
-    width:85%;
-    height:auto;
-
-    min-height:420px;
-}
-
-.envelope{
-
     width:90%;
-    height:220px;
+
+    min-height:auto;
+
+    padding:30px;
 }
 
-.flower1,
-.flower2,
-.flower3,
-.flower4{
+.flower{
 
-    width:170px;
+    width:170px !important;
 }
-
-.flower1{
-    top:10px;
-    left:10px;
-}
-
-.flower2{
-    top:10px;
-    right:10px;
-}
-
-.flower3{
-    bottom:160px;
-    left:10px;
-}
-
-.flower4{
-    bottom:160px;
-    right:10px;
-}
-
-}
-
-/* Music control */
-.music-toggle,
-#music-toggle{
-    position:fixed;
-    right:18px;
-    top:18px;
-    z-index:1000;
-    background:rgba(255,255,255,0.9);
-    border:0;
-    padding:8px 12px;
-    border-radius:20px;
-    box-shadow:0 4px 12px rgba(0,0,0,0.12);
-    cursor:pointer;
-    font-size:14px;
-}
-
-#music-toggle[aria-pressed="true"]{
-    background:linear-gradient(90deg,#ffd9e8,#ffb8cf);
 }
 
 </style>
+
 </head>
 
 <body>
 
-<div class="top-doodle">
-    <span class="doodle">💕</span>
-    <span class="doodle">🧸</span>
-    <span class="doodle">💖</span>
-    <span class="doodle">🧸</span>
-    <span class="doodle">💕</span>
+<!-- =========================
+     INTRO SCREEN
+========================= -->
+
+<div id="intro-screen">
+
+    <div id="popup-envelope">
+
+        <div class="popup-base"></div>
+
+        <div class="popup-flap"></div>
+
+        <div class="popup-heart">
+            💖
+        </div>
+
+    </div>
+
+    <h2 id="click-text">
+        Click The Envelope 💌
+    </h2>
+
 </div>
 
-<!-- Background music and control -->
-<audio id="bg-music" loop preload="auto" playsinline>
-    <source src="music/hijo-de-la-luna.mp3.mp3" type="audio/mp3">
-    Your browser does not support the audio element.
+<!-- =========================
+     MAIN CONTENT
+========================= -->
+
+<div id="main-content">
+
+    <!-- Doodle -->
+
+    <div class="top-doodle">
+
+        <span class="doodle">💕</span>
+        <span class="doodle">🧸</span>
+        <span class="doodle">💖</span>
+        <span class="doodle">🧸</span>
+        <span class="doodle">💕</span>
+
+    </div>
+
+    <!-- Container -->
+
+    <div class="container">
+
+        <!-- Flowers -->
+
+        <img src="assets/flower1.png"
+             class="flower flower1">
+
+        <img src="assets/flower2.png"
+             class="flower flower2">
+
+        <img src="assets/flower3.png"
+             class="flower flower3">
+
+        <img src="assets/flower4.png"
+             class="flower flower4">
+
+        <!-- Letter -->
+
+        <div class="letter">
+
+    <h1 id="name"></h1>
+
+    <p id="typing"></p>
+
+    <button id="gift-btn">
+        💖 One More Thing...
+    </button>
+
+</div>         
+
+        <!-- Envelope bawah -->
+
+        <div class="envelope">
+
+            <div class="envelope-base"></div>
+
+            <div class="envelope-top"></div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- Flower Popup -->
+
+<div id="flower-popup">
+
+    <div class="popup-card">
+
+        <span id="close-popup">✖</span>
+
+        <div class="popup-flower">
+            🌸💐🌷
+        </div>
+
+        <h2>For Tifany 💖</h2>
+
+        <p>
+            Thank you for being born.
+            <br><br>
+            Semoga semua kebahagiaan,
+            kesehatan, dan impian baik
+            selalu menyertaimu.
+            <br><br>
+            Let's meet in the fields of green
+            🌸💐🌷
+        </p>
+
+    </div>
+
+</div>
+
+<!-- =========================
+     MUSIC
+========================= -->
+
+<audio id="bg-music"
+       loop
+       preload="auto">
+
+    <source
+    src="music/hijo-de-la-luna.mp3.mp3" type="audio/mpeg">
+
 </audio>
 
-<button id="music-toggle" aria-pressed="false">Play music</button>
+<button id="music-toggle">
 
-<div class="container">
+    🎵 Play Music
 
-    <!-- Flowers -->
-
-    <img src="assets/flower1.png"
-    class="flower flower1">
-
-    <img src="assets/flower2.png"
-    class="flower flower2">
-
-    <img src="assets/flower3.png"
-    class="flower flower3">
-
-    <img src="assets/flower4.png"
-    class="flower flower4">
-
-    <!-- Letter -->
-
-    <div class="letter">
-
-        <h1 id="name"></h1>
-        <p id="typing"></p>
-
-    </div>
-
-    <!-- Envelope -->
-
-    <div class="envelope">
-
-        <div class="envelope-base"></div>
-
-        <div class="envelope-top"></div>
-
-    </div>
-
-</div>
+</button>
 
 <script>
 
-/* Nama */
+/* =========================
+   DATA SURAT
+========================= */
 
-const receiver =
-"Tifany";
-
-/* Isi Surat */
+const receiver = "Tifany";
 
 const text =
 `Selamat ulang tahun 🎂
@@ -528,70 +1008,248 @@ selalu menjadi pribadi
 yang baik dan membawa
 warna dalam banyak cerita.
 
-Selamat bertambah,
-selamat atas hari-hari
-yang dilalui.
-Bulan dimana kamu dilahirkan,
-adalah titik awal kamu 
-melewati segala hal.
-Maka, bertumbuhlah dengan
-sangat cantik.
+Selamat bertambah usia,
+dan semoga langkahmu
+selalu dipenuhi hal-hal baik.
 
-Sekali lagi, selamat ulang tahun.
+Bulan dimana kamu dilahirkan,
+adalah titik awal perjalananmu
+menjadi pribadi yang kuat,
+baik, dan cantik.
+
+Tetaplah bersinar,
+tetaplah tersenyum,
+dan jangan pernah berhenti
+menjadi dirimu sendiri.
+
 🌸💖🌷`;
 
-/* Nama */
+/* =========================
+   ELEMENT
+========================= */
 
-const nameEl = document.getElementById("name");
-const typingEl = document.getElementById("typing");
+const introScreen =
+document.getElementById("intro-screen");
 
-nameEl.textContent = "💐" + "Happy Birthday" + "🎂" + receiver;
+const popupEnvelope =
+document.getElementById("popup-envelope");
 
-/* Typing Effect */
+const mainContent =
+document.getElementById("main-content");
 
-let i = 0;
+const letter =
+document.querySelector(".letter");
 
-function type(){
+const nameEl =
+document.getElementById("name");
 
-    if(i < text.length){
+const typingEl =
+document.getElementById("typing");
+
+const bgMusic =
+document.getElementById("bg-music");
+
+const musicBtn =
+document.getElementById("music-toggle");
+
+/* =========================
+   TITLE
+========================= */
+
+nameEl.innerHTML =
+`Happy Birthday <br>💐 ${receiver} 💐`;
+
+/* =========================
+   TYPING EFFECT
+========================= */
+
+let index = 0;
+
+function startTyping(){
+
+    typingEl.innerHTML = "";
+
+    index = 0;
+
+    function type(){
+
+    if(index < text.length){
 
         typingEl.innerHTML +=
-        text.charAt(i);
+        text.charAt(index);
 
-        typingEl.scrollTo({
-            top: typingEl.scrollHeight,
-            behavior: "smooth"
+        index++;
+
+        setTimeout(type,70);
+
+    }else{
+
+        confetti({
+
+            particleCount:150,
+
+            spread:100,
+
+            origin:{y:0.7}
+
         });
 
-        i++;
+        document
+.getElementById("gift-btn")
+.classList.add("show-btn");
 
-        setTimeout(type,120);
     }
 }
-
-/* Random flower rotation */
-
-function randomBetween(min, max) {
-    return Math.random() * (max - min) + min;
+    type();
 }
 
-function setFlowerRotation() {
-    document.querySelectorAll('.flower').forEach((flower) => {
-        // Respect any rotation set via CSS rules or inline styles.
-        const computed = getComputedStyle(flower).getPropertyValue('--flower-rotate').trim();
-        if (computed && computed !== '0' && computed !== '0deg') {
-            return; // leave existing class-defined rotation alone
+/* =========================
+   OPEN LETTER
+========================= */
+
+popupEnvelope.addEventListener(
+"click",
+openLetter
+);
+
+function openLetter(){
+
+    popupEnvelope.classList.add(
+    "open"
+    );
+
+    /* Confetti */
+
+    confetti({
+
+        particleCount:250,
+
+        spread:120,
+
+        origin:{
+            y:0.6
         }
-
-        const angle = randomBetween(-24, 24);
-        flower.style.setProperty('--flower-rotate', `${angle}deg`);
     });
+
+    /* Tunggu amplop terbuka */
+
+    setTimeout(()=>{
+
+        introScreen.style.opacity =
+        "0";
+
+        introScreen.style.transition =
+        "1s";
+
+    },1000);
+
+    setTimeout(()=>{
+
+        introScreen.style.display =
+        "none";
+
+        mainContent.style.display =
+        "block";
+
+        showLetter();
+
+        playMusic();
+
+        startSakura();
+
+    },1800);
 }
 
-// Only apply random rotation to flowers that don't already have a rotation
-setFlowerRotation();
+/* =========================
+   LETTER ANIMATION
+========================= */
 
-/* Sakura */
+function showLetter(){
+
+    letter.style.animation =
+    "letterAppear 1.5s ease forwards";
+
+    // Mulai bunga mengambang
+    setTimeout(()=>{
+
+        document.querySelectorAll(".flower")
+        .forEach((flower,index)=>{
+
+            flower.animate(
+            [
+                {
+                    transform:
+                    getComputedStyle(flower).transform
+                },
+                {
+                    transform:
+                    "translateY(-15px)"
+                },
+                {
+                    transform:
+                    "translateY(0px)"
+                }
+            ],
+            {
+                duration:4000 + index*500,
+                iterations:Infinity
+            });
+
+        });
+
+    },1800);
+
+    setTimeout(()=>{
+
+        startTyping();
+
+    },1500);
+}
+/* =========================
+   MUSIC
+========================= */
+
+function playMusic(){
+
+    bgMusic.play()
+    .catch(err=>{
+
+        console.log(
+        "Autoplay blocked",
+        err
+        );
+
+    });
+
+    musicBtn.innerHTML =
+    "⏸ Pause Music";
+}
+
+musicBtn.addEventListener(
+"click",
+()=>{
+
+    if(bgMusic.paused){
+
+        bgMusic.play();
+
+        musicBtn.innerHTML =
+        "⏸ Pause Music";
+
+    }else{
+
+        bgMusic.pause();
+
+        musicBtn.innerHTML =
+        "🎵 Play Music";
+    }
+});
+
+/* =========================
+   SAKURA
+========================= */
+
+let sakuraInterval;
 
 function createSakura(){
 
@@ -602,123 +1260,94 @@ function createSakura(){
     "sakura"
     );
 
-    sakura.innerHTML="🌸";
+    sakura.innerHTML =
+    "🌸";
 
     sakura.style.left =
     Math.random()*100 +
     "vw";
 
-    sakura.style.top =
-    "-30px";
-
     sakura.style.fontSize =
-    Math.random()*20+12+
+    Math.random()*18+12 +
     "px";
-
-    sakura.style.animationDuration =
-    Math.random()*8+8+
-    "s";
 
     sakura.style.opacity =
     Math.random()*0.5+0.5;
 
-    document.body
-    .appendChild(sakura);
+    sakura.style.animationDuration =
+    Math.random()*5+6 +
+    "s";
+
+    document.body.appendChild(
+    sakura
+    );
 
     setTimeout(()=>{
 
         sakura.remove();
 
-    },10000);
+    },12000);
 }
 
-setInterval(
-createSakura,
-400
+/* =========================
+   FLOATING LETTER
+========================= */
+
+setInterval(()=>{
+
+    if(mainContent.style.display ===
+       "block"){
+
+        letter.style.transform =
+        "translateX(-50%) translateY(-8px)";
+
+        setTimeout(()=>{
+
+            letter.style.transform =
+            "translateX(-50%) translateY(0px)";
+
+        },2000);
+    }
+
+},4000);
+
+function startSakura(){
+
+    sakuraInterval =
+    setInterval(
+    createSakura,
+    350
+    );
+}
+
+/* =========================
+   FLOWER POPUP
+========================= */
+
+const flowerPopup =
+document.getElementById(
+"flower-popup"
 );
 
-/* Music auto-play on user interaction */
-const bgMusic = document.getElementById('bg-music');
-let typingStarted = false;
+const closePopup =
+document.getElementById(
+"close-popup"
+);
 
-function startTyping(){
-    if (!typingStarted) {
-        typingStarted = true;
-        i = 0;
-        typingEl.innerHTML = '';
-        type();
-    }
-}
+document
+.getElementById("gift-btn")
+.addEventListener("click",()=>{
+    flowerPopup.style.display ="flex";
 
-function startScene() {
-    if (!typingStarted) {
-        startTyping();
-    }
+});
 
-    if (bgMusic && bgMusic.paused) {
-        bgMusic.play().then(() => {
-            updateMusicButton();
-        }).catch((err) => {
-            console.error('Music play failed', err);
-        });
-    }
-}
+closePopup
+.addEventListener("click",()=>{
 
-// Keep the text typing synced with audio when it starts playing
-if (bgMusic) {
-    bgMusic.addEventListener('play', startTyping);
-}
+    flowerPopup.style.display =
+    "none";
 
-const musicToggle = document.getElementById('music-toggle');
-
-function updateMusicButton() {
-    if (!musicToggle || !bgMusic) return;
-    const isPlaying = !bgMusic.paused;
-
-    if (!isPlaying) {
-        musicToggle.setAttribute('aria-pressed', 'false');
-        musicToggle.textContent = 'Play music';
-    } else {
-        musicToggle.setAttribute('aria-pressed', 'true');
-        musicToggle.textContent = 'Pause music';
-    }
-}
-
-function toggleMusic(event) {
-    if (event) event.stopPropagation();
-    if (!bgMusic) return;
-
-    if (bgMusic.paused) {
-        bgMusic.play().then(() => {
-            updateMusicButton();
-        }).catch((err) => {
-            console.error('Music play failed', err);
-        });
-    } else {
-        bgMusic.pause();
-        updateMusicButton();
-    }
-}
-
-if (musicToggle) {
-    musicToggle.addEventListener('click', toggleMusic);
-}
-
-function handleFirstUserClick() {
-    startScene();
-    document.removeEventListener('click', handleFirstUserClick);
-}
-
-document.addEventListener('click', handleFirstUserClick, {once:true});
-
-// media error logging for diagnostics
-if(bgMusic){
-    bgMusic.addEventListener('error', (e)=>{
-        console.error('Media element error', bgMusic.error, e);
-        alert('Media playback error — see console for details.');
-    });
-    updateMusicButton();
-}
+});
 
 </script>
 
