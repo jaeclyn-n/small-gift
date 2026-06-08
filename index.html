@@ -796,6 +796,33 @@ body{
     scale(1.05);
 }
 
+#gift-btn{
+
+    display:none;
+
+    margin:20px auto 0;
+
+    padding:12px 20px;
+
+    border:none;
+
+    border-radius:20px;
+
+    background:#d889a7;
+
+    color:white;
+
+    font-size:16px;
+
+    cursor:pointer;
+
+    transition:.3s;
+}
+
+#gift-btn:hover{
+
+    transform:scale(1.05);
+}
 .show-btn{
 
     display:block !important;
@@ -825,45 +852,82 @@ body{
 
 @media(max-width:768px){
 
-#gift-btn:hover{
+    #gift-btn:hover{
+        transform:scale(1.05);
+    }
 
-    transform:scale(1.05);
+    .container{
+
+        width:100%;
+        height:750px;
+    }
+
+    .letter{
+
+        width:90vw;
+        max-width:360px;
+
+        height:500px;
+
+        top:150px;
+
+        padding:25px;
+    }
+
+    #name{
+
+        font-size:20px;
+    }
+
+    #typing{
+
+        font-size:16px;
+
+        max-height:260px;
+    }
+
+    .envelope{
+
+        width:90vw;
+
+        max-width:360px;
+
+        height:200px;
+    }
+
+    .flower1,
+    .flower2,
+    .flower3,
+    .flower4{
+
+        width:120px !important;
+    }
+
+    .flower1{
+
+        left:-35px;
+        top:260px;
+    }
+
+    .flower2{
+
+        right:-35px;
+        top:260px;
+    }
+
+    .flower3{
+
+        left:-35px;
+        bottom:160px;
+    }
+
+    .flower4{
+
+        right:-35px;
+        bottom:160px;
+    }
+
 }
-
-.container{
-
-    width:100%;
-    height:100vh;
-
-    display:flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.letter{
-
-    width:90%;
-    max-width:450px;
-
-    height:500px;
-
-    top:80px;
-}
-
-.envelope{
-
-    width:90%;
-    max-width:500px;
-
-    height:220px;
-}
-
-.flower{
-
-    width:170px !important;
-}
-}
-
 </style>
 
 </head>
