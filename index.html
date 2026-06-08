@@ -228,9 +228,9 @@ body{
 
 .flower1{
 
-    width:260px;
-    top:20px;
-    left:-150px;
+    width:150px !important;
+    top:80px;
+    left:-60px;
 
     animation:
     flowerLeft 1.5s forwards;
@@ -238,9 +238,9 @@ body{
 
 .flower2{
 
-    width:260px;
-    top:20px;
-    right:-190px;
+    width:150px !important;
+    top:80px;
+    right:-60px;
 
     animation:
     flowerRight 1.5s forwards;
@@ -248,9 +248,9 @@ body{
 
 .flower3{
 
-    width:260px;
-    bottom:120px;
-    left:-150px;
+    width:150px !important;
+    bottom:180px;
+    left:-60px;
 
     animation:
     flowerLeft 1.8s forwards;
@@ -258,9 +258,9 @@ body{
 
 .flower4{
 
-    width:280px;
-    bottom:110px;
-    right:-190px;
+    width: 150px !important;
+    bottom:180px;
+    right:-60px;
 
     animation:
     flowerRight 1.8s forwards;
@@ -272,12 +272,15 @@ body{
 
     position:absolute;
 
-    left:50%;
-
     width:500px;
     height:560px;
 
-    top:90px;
+    top:120px;
+    left:50%;
+
+    transform:
+    translateX(-50%)
+    scale(.2);
 
     background:
     linear-gradient(
@@ -306,10 +309,6 @@ body{
     0 0 25px rgba(255,158,207,.5),
     0 0 15px rgba(169,214,255,.4),
     0 15px 35px rgba(0,0,0,.12);
-
-    transform:
-    translateX(-50%)
-    scale(.2);
 }
 
 #name{
@@ -456,6 +455,13 @@ body{
     border-radius:20px;
 
     cursor:pointer;
+
+    font-size:12px;
+
+    padding:8px 12px;
+
+    right:10px;
+    top:10px;
 }
 
 /* Sakura */
@@ -828,15 +834,28 @@ body{
 
     width:100%;
     height:100vh;
+
+    display:flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .letter{
 
     width:90%;
+    max-width:450px;
 
-    min-height:auto;
+    height:500px;
 
-    padding:30px;
+    top:80px;
+}
+
+.envelope{
+
+    width:90%;
+    max-width:500px;
+
+    height:220px;
 }
 
 .flower{
@@ -954,7 +973,7 @@ body{
         <h2>For Tifany 💖</h2>
 
         <p>
-            Thank you for being born.
+            Happy Birthday!
             <br><br>
             Semoga semua kebahagiaan,
             kesehatan, dan impian baik
