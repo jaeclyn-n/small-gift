@@ -16,9 +16,14 @@
     box-sizing:border-box;
 }
 
+html,
+body{
+    overflow-x:hidden;
+    width:100%;
+}
+
 body{
     min-height:100vh;
-    overflow-x:hidden;
     overflow-y:auto;
 
     display:flex;
@@ -214,7 +219,7 @@ body{
     position:relative;
 
     width:850px;
-    height:850px;
+    min-height:100vh;
 }
 
 /* Flowers */
@@ -285,7 +290,7 @@ body{
     position:absolute;
 
     width:500px;
-    height:560px;
+    min-height:560px;
 
     top:120px;
     left:50%;
@@ -455,8 +460,8 @@ body{
 
     position:fixed;
 
-    right:20px;
-    top:20px;
+    right:15px;
+    top:15px;
 
     z-index:999;
 
@@ -715,33 +720,6 @@ body{
 
 /* Mobile */
 
-#gift-btn{
-
-    display:none;
-
-    opacity:0;
-
-    transform:translateY(20px);
-
-    margin:20px auto 0;
-
-    padding:12px 20px;
-
-    border:none;
-
-    border-radius:20px;
-
-    background:#d889a7;
-
-    color:white;
-
-    font-size:16px;
-
-    cursor:pointer;
-
-    transition:.3s;
-}
-
 #gift-btn:hover{
 
     transform:
@@ -802,7 +780,7 @@ body{
 @media(max-width:768px){
 
     .top-doodle{
-        top:80px;
+        top:50px;
     }
 
     .doodle{
@@ -810,25 +788,24 @@ body{
     }
 
     .letter{
-        top:220px;
+        top:180px;
     }
 
     #gift-btn:hover{
         transform:scale(1.05);
     }
 
-    .container{
-
-        width:100%;
-        height:650px;
-    }
+   .container{
+    width:100%;
+    min-height:950px;
+}
 
     .letter{
 
         width:92%;
         max-width:420px;
 
-        height:500px;
+        min-height:500px;
 
         top:220px;
 
@@ -853,40 +830,32 @@ body{
 
         max-width:360px;
 
-        height:200px;
+        height:40px;
     }
 
-    .flower1{
+.flower1{
+    width:170px !important;
+    left:-5px;
+    top:250px;
+ }
 
-    width:180px !important;
+.flower2{
+    width:170px !important;
+    right:-5px;
+    top:250px;
+ }
 
-    left:-50px;
-    top:260px;
-    }
+.flower3{
+    width:140px !important;
+    left:10px;
+    bottom:160px;
+ }
 
-    .flower2{
-
-    width:180px !important;
-
-    right:-50px;
-    top:260px;
-   }
-
-    .flower3{
-
-    width:150px !important;
-
-    left:-25px;
-    bottom:70px;
-    } 
-
-    .flower4{
-
-    width:150px !important;
-
-    right:-25px;
-    bottom:70px;
-    } 
+.flower4{
+    width:140px !important;
+    right:10px;
+    bottom:160px;
+ }
 
 }
 </style>
@@ -1201,33 +1170,6 @@ function openLetter(){
 
         startSakura();
 
-        setTimeout(()=>{
-
-    document.querySelectorAll(".flower")
-    .forEach((flower,index)=>{
-
-        flower.animate(
-        [
-            {
-                transform:"translateY(0px)"
-            },
-            {
-                transform:"translateY(-15px)"
-            },
-            {
-                transform:"translateY(0px)"
-            }
-        ],
-        {
-            duration:4000 + (index*500),
-            iterations:Infinity,
-            easing:"ease-in-out"
-        });
-
-    });
-
-},2000);
-
     },1800);
 }
 
@@ -1240,49 +1182,35 @@ function showLetter(){
     letter.style.animation =
     "letterAppear 1.5s ease forwards";
 
-    // Mulai bunga mengambang
     setTimeout(()=>{
 
-    document.querySelectorAll(".flower")
-    .forEach((flower,index)=>{
-
-        flower.style.animation +=
-        ", flowerFloat " +
-        (4 + index) +
-        "s ease-in-out infinite";
-
-    });
-
+        document
+        .querySelectorAll(".flower")
+        .forEach((flower,index)=>{
 
             flower.animate(
             [
-                {
-                    transform:
-                    getComputedStyle(flower).transform
-                },
-                {
-                    transform:
-                    "translateY(-15px)"
-                },
-                {
-                    transform:
-                    "translateY(0px)"
-                }
+                { transform:"translateY(0px)" },
+                { transform:"translateY(-15px)" },
+                { transform:"translateY(0px)" }
             ],
             {
                 duration:4000 + index*500,
-                iterations:Infinity
+                iterations:Infinity,
+                easing:"ease-in-out"
             });
 
         });
 
-    } 1800;
+    },1500);
 
     setTimeout(()=>{
 
         startTyping();
 
     },1500);
+
+}
 
 /* =========================
    MUSIC
